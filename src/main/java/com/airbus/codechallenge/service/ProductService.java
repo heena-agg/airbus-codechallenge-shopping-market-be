@@ -45,6 +45,10 @@ public class ProductService {
 	
 	public Product createProduct(Product product)
 	{
+		List<Product> productList = productRepository.findAll();
+		System.out.println(productList);
+		System.out.println("product to update : " + product.toString());
+		
 		int count = (int) productRepository.findAll().stream()
 			.filter(
 					x ->  x.getProductName().equals(product.getProductName()) 
@@ -57,7 +61,10 @@ public class ProductService {
 			return productRepository.save(product);
 		}else {
 			throw new ResourceAlreadyExistException(ErrorMessage.PRODUCT_ALREADY_EXIST + product.toString());
-		}		
+		}
+			
+			
+		
 	}
 	
 	
@@ -67,11 +74,11 @@ public class ProductService {
 		if(ObjectUtils.isEmpty(existingProduct)) {
 			throw new ResourceNotFoundException(ErrorMessage.PRODUCT_NOT_FOUND + productId);
 		}else {
-			existingProduct.setCategory(product.getCategory());
-			existingProduct.setProductDescription(product.getProductDescription());
-			existingProduct.setProductName(product.getProductName());
-			existingProduct.setUnits(product.getUnits());			
-			return productRepository.save(existingProduct);
+//			existingProduct.setCategory(product.getCategory());
+//			existingProduct.setProductDescription(product.getProductDescription());
+//			existingProduct.setProductName(product.getProductName());
+//			existingProduct.setUnits(product.getUnits());
+			return createProduct(product);
 		}
 										
 	}

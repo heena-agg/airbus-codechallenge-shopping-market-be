@@ -36,9 +36,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.addFilter(new JWTAuthenticationFilter(authenticationManager()))
 				.addFilter(new JWTAuthorizationFilter(authenticationManager())).sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+		
+		
 
-		http
-		.headers()
+		http		
+		.headers().frameOptions().disable()
+	    .addHeaderWriter(new StaticHeadersWriter("X-FRAME-OPTIONS", "SAMEORIGIN"))
 		.addHeaderWriter(new StaticHeadersWriter("Access-Control-Allow-Origin", "*"));
 	}
 
