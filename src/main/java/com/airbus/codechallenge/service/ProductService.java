@@ -46,17 +46,18 @@ public class ProductService {
 	public Product createProduct(Product product)
 	{
 		int count = (int) productRepository.findAll().stream()
-			.filter(x ->  x.getProductName().equals(product.getProductName()) && x.getProductDescription().equals(product.getProductDescription()) )
+			.filter(
+					x ->  x.getProductName().equals(product.getProductName()) 
+					&& x.getProductDescription().equals(product.getProductDescription()) 
+					&& x.getCategory().equals(product.getCategory()) 
+					)
 			.count();
 		
 		if(count == 0 ) {
 			return productRepository.save(product);
 		}else {
 			throw new ResourceAlreadyExistException(ErrorMessage.PRODUCT_ALREADY_EXIST + product.toString());
-		}
-			
-			
-		
+		}		
 	}
 	
 	
@@ -69,7 +70,7 @@ public class ProductService {
 			existingProduct.setCategory(product.getCategory());
 			existingProduct.setProductDescription(product.getProductDescription());
 			existingProduct.setProductName(product.getProductName());
-			existingProduct.setUnits(product.getUnits());
+			existingProduct.setUnits(product.getUnits());			
 			return productRepository.save(existingProduct);
 		}
 										
