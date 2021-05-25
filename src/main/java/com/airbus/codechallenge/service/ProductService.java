@@ -45,10 +45,6 @@ public class ProductService {
 	
 	public Product createProduct(Product product)
 	{
-		List<Product> productList = productRepository.findAll();
-		System.out.println(productList);
-		System.out.println("product to update : " + product.toString());
-		
 		int count = (int) productRepository.findAll().stream()
 			.filter(
 					x ->  x.getProductName().equals(product.getProductName()) 
@@ -62,9 +58,6 @@ public class ProductService {
 		}else {
 			throw new ResourceAlreadyExistException(ErrorMessage.PRODUCT_ALREADY_EXIST + product.toString());
 		}
-			
-			
-		
 	}
 	
 	
